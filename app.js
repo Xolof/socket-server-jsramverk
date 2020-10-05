@@ -17,7 +17,13 @@ app.all('/', function(req, res, next) {
   next();
  });
 
-io.origins(['https://me-app.oljo.me:443']);
+// io.origins(['https://me-app.oljo.me:443']);
+io.origins((origin, callback) => {
+  if (origin !== 'https://me-app.oljo.me') {
+    return callback('origin not allowed', false);
+  }
+  callback(null, true);
+});
 
 io.on("connection", function (socket) {
 
