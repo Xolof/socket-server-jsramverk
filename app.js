@@ -11,20 +11,14 @@ const { getTime } = require("./src/functions/functions");
 // const nicks = require("./src/models/nicks");
 
 // CORS
-app.all('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
- });
+// app.all('/', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   next();
+//  });
 
- io.origins(['*:*']);
-// io.origins(['https://me-app.oljo.me:443']);
-// io.origins((origin, callback) => {
-//   if (origin !== 'https://me-app.oljo.me/#/chat:443') {
-//     return callback('origin not allowed', false);
-//   }
-//   callback(null, true);
-// });
+io.origins(['https://me-app.oljo.me:443']);
+
 
 io.on("connection", function (socket) {
 
@@ -62,5 +56,5 @@ io.on("connection", function (socket) {
 const port = 8300;
 
 server.listen(port, function () {
-    console.log("Websocker server listening on port " + port + ".")
+    console.log("Websocker server listening on port " + port + ".");
 });
