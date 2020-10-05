@@ -11,6 +11,12 @@ const { getTime } = require("./src/functions/functions");
 // const nicks = require("./src/models/nicks");
 
 // CORS
+app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
+
 io.origins(['https://me-app.oljo.me:443']);
 
 io.on("connection", function (socket) {
