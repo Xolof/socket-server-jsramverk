@@ -10,7 +10,8 @@ const io = require("socket.io")(server);
 const { getTime } = require("./src/functions/functions");
 // const nicks = require("./src/models/nicks");
 
-io.origins(['https://me-app.oljo.me:443']);
+// CORS
+io.origins(['https://me-app.oljo.me:*']);
 
 io.on("connection", function (socket) {
 
