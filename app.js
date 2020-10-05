@@ -19,7 +19,7 @@ app.all('/', function(req, res, next) {
 
 // io.origins(['https://me-app.oljo.me:443']);
 io.origins((origin, callback) => {
-  if (origin !== 'https://me-app.oljo.me') {
+  if (origin !== 'https://me-app.oljo.me/#/chat') {
     return callback('origin not allowed', false);
   }
   callback(null, true);
