@@ -8,9 +8,15 @@ const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
 const { getTime } = require("./src/functions/functions");
+const { saveMessage, getMessages } = require("./src/models/db/db");
 // const nicks = require("./src/models/nicks");
 
 io.origins(['https://me-app.oljo.me:443']);
+
+app.get("/", async function(req, res) {
+    let messages = await getMessages();
+    res.json(messages);
+});
 
 io.on("connection", function (socket) {
 
@@ -21,17 +27,21 @@ io.on("connection", function (socket) {
     socket.on("new nick", function (nick) {
         currentNick = nick;
         let currentTime = getTime();
+        let data = { message: nick + " anslöt sig till chatten.", time: currentTime };
+        saveMessage(data);
         io.emit(
             "nick joined",
-            { message: nick + " anslöt sig till chatten.", time: currentTime }
+            data
         );
     });
 
-    socket.on("chat message", function (data) {
+    socket.on("chat message", function (message) {
        let currentTime = getTime();
+       let data = { nick: message.nick, message: message.message, time: currentTime };
+       saveMessage(data);
        io.emit(
            "chat message",
-           { nick: data.nick, message: data.message, time: currentTime }
+           data
        );
     });
 
